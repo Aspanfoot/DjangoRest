@@ -10,40 +10,33 @@
 			<th class = "control-buttons"></th>
 		</tr>
 	</thead>
-	<tbody>
-		<tr>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
+	<tbody ng-controller="modalUpdate">
+		<tr ng-repeat = "task in tasks" >
+			<td>{{$index + 1}}</td>
+			<td>{{task.name}}</td>
+			<td>{{task.description}}</td>
+			<td>{{task.status}}</td>
+			<td>{{task.priority}}</td>
 			<td></td>
 			<td>
-				<button type="button"
-						class="btn btn-warning btn-sm js-update-task"
-						data-url="">
-					<span class="glyphicon glyphicon-pencil"></span>
-				</button>
-				<button type="button"
-						class="btn btn-danger btn-sm js-delete-task"
-						data-url="">
-						<span class="glyphicon glyphicon-trash"></span>
-				</button>
+			<button type="button"
+					class="btn btn-warning btn-sm"
+					ng-click="updateForm(task.id)"
+					data-url="tasks/{{task.id}}">
+				<span class="glyphicon glyphicon-pencil"></span>
+			</button>
+			<button type="button"
+					class="btn btn-danger btn-sm"
+					data-url="" ng-click="deleteTask(task.id)">
+					<span class="glyphicon glyphicon-trash"></span>
+			</button>
 			</td>
 		</tr>
 	</tbody>
 </table>
-<p>
-	<button type="button" class="btn btn-primary js-create-task"
-		data-url = "">
+<div ng-controller="modalCreate">
+	<button type="button" class="btn btn-primary" ng-click="addForm()">
 		<span class="glyphicon glyphicon-plus"></span>
 		Add task
 	</button>
-</p>
-
-<div class="modal fade" id="modal-task">
-	<div class="modal-dialog">
-		<div class="modal-content">
-		</div>
-	</div>
 </div>

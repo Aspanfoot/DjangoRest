@@ -1,0 +1,14 @@
+.container {
+	width: 80%;
+	margin: 0 auto;
+}
+
+#task-table {
+	table-layout: fixed;
+}
+
+#task-table td{
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
