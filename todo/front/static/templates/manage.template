@@ -1,0 +1,49 @@
+<h1 class="page-header">Task list avaiable</h1>
+<table class="table" id = "task-table">
+	<thead>
+		<tr>
+			<th class = "number">№</th>
+			<th class = "name">Task Name</th>
+			<th class = "description">Description</th>
+			<th class = "status">Status</th>
+			<th class = "priority">Priority</th>
+			<th class = "control-buttons"></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>
+				<button type="button"
+						class="btn btn-warning btn-sm js-update-task"
+						data-url="">
+					<span class="glyphicon glyphicon-pencil"></span>
+				</button>
+				<button type="button"
+						class="btn btn-danger btn-sm js-delete-task"
+						data-url="">
+						<span class="glyphicon glyphicon-trash"></span>
+				</button>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p>
+	<button type="button" class="btn btn-primary js-create-task"
+		data-url = "">
+		<span class="glyphicon glyphicon-plus"></span>
+		Add task
+	</button>
+</p>
+
+<div class="modal fade" id="modal-task">
+	<div class="modal-dialog">
+		<div class="modal-content">
+		</div>
+	</div>
+</div>

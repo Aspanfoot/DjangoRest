@@ -1,0 +1,18 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" ng-app="todo">
+<head>
+	<meta charset="UTF-8">
+	<title>Todo</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+<body>
+	{% include 'navigation.html' %}
+	<ui-view></ui-view>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.js"></script>
+	<script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>
