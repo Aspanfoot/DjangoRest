@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block javascript %}
+	<script src="{% static 'js/app.js' %}"></script>
+	<script src="{% static 'js/controllers.js' %}"></script>
+	<script src="{% static 'js/services.js' %}"></script>
+	<script src="{% static 'js/uiRouter.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+	<div ng-app="todo">
+		<ui-view ></ui-view>
+	</div>
+{% endblock %}
