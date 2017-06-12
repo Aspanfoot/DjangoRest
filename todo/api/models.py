@@ -2,7 +2,6 @@ from django.db import models
 from django.utils import timezone
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-
 class Task(models.Model):
 	COMPLETE = 'COMPLETE'
 	NOT_STARTED = 'NOT_STARTED'
