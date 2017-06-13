@@ -12,8 +12,8 @@ app.controller('MainCtrl', function($scope, $state, Tasks){
 		});
 	};
 
-	$scope.deleteTask = function(id){
-		Tasks.delete(id).then(function(res){
+	$scope.deleteTask = function(id) {
+		Tasks.delete(id).then(function(res) {
 			$scope.update_scope();
 		});
 	};

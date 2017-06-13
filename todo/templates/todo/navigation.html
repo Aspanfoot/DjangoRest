@@ -13,15 +13,15 @@
 				<li><a href = "{% url 'profile:profile' %}"><span class="glyphicon glyphicon-cog login-shift">
 					</span>Profile</a></li>
 				<li>
-					<a href ="{% url 'accounts:auth_logout'%}">
+					<a href ="{% url 'accounts:logout' %}">
 						<span class="glyphicon glyphicon-log-out"></span>Logout
 					</a>
 				</li>
 			{% else %}
-				<li><a href = "{% url 'unique_email_register'%}"><span class="glyphicon glyphicon-user login-shift"></span>Sign up</a></li>
+				<li><a href = "{% url 'accounts:register' %}"><span class="glyphicon glyphicon-user login-shift"></span>Sign up</a></li>
 				<li>
-					<a href = "{% url 'accounts:auth_login'%}">
-						<span class="glyphicon glyphicon-log-in "></span>Login
+					<a href = "{% url  'accounts:login'%}">
+						<span class="glyphicon glyphicon-log-in"></span>Login
 					</a>
 				</li>
 			{% endif %}

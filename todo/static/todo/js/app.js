@@ -4,4 +4,3 @@ var app = angular.module('todo', [
 	'ngCookies'
 	]
 );
-
