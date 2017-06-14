@@ -8,23 +8,34 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" href="{% static 'css/base.css'%}">
-</head>
-<body>
-	{% include 'navigation.html' %}
 
-	<div class="container">
-		{% block content %}
-		{% endblock %}
+	<link rel="stylesheet" href="{% static 'css/body.css'%}">
+	<link rel="stylesheet" href="{% static 'css/header.css'%}">
+	<link rel="stylesheet" href="{% static 'css/login_form.css'%}">
+
+<!-- <base href="/">
+ -->
+ </head>
+<body>
+	<div ng-app="todo">
+		<div class="header">
+			<ui-view name="header"></ui-view>
+		</div>
+		<div class="body">
+			<ui-view name="body"></ui-view>
+		</div>
 	</div>
 
 	<script src="{% static 'bower_components/angular/angular.js' %}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.js"></script>
 	<script src="{% static 'bower_components/angular-cookies/angular-cookies.js' %}"></script>
-	{% block javascript %}
-	{% endblock %}
+	
+	<script src="{% static 'js/app.js' %}"></script>
+	<script src="{% static 'js/controllers.js' %}"></script>
+	<script src="{% static 'js/services.js' %}"></script>
+	<script src="{% static 'js/uiRouter.js' %}"></script>
+	
 </body>
 </html>

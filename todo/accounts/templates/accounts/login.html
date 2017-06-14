@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load crispy_forms_tags %}
-<div class = "container form-center" ng-app="login">
-	<form action="" method = 'post' ng-controller="LoginCtrl">
+{% load static %}
+<div class = "container form-center" ng-app="todo">
+	<form action="" method = 'post' ng-controller="MainCtrl">
 		{% csrf_token %}
 		<div class = "form-group">
 			<label for"">Enter username</label>
@@ -12,31 +13,13 @@
 			<label for="password">Enter password</label>
 			<input class="form-control" type="text" name="password" id="password" ng-model="password">
 		</div>
-		<button type="button" class = "btn btn-primary" ng-click="submit()">Login</button>
+		<button type="button" class="btn btn-primary" ng-click="login()">Login</button>
+		<button type="button" class="btn btn-primary" ng-click="logout()" style="margin-top:10px;">Logout</button>
 	</form>
 </div>
 {% endblock %}
-
 {% block javascript %}
-<script>
-	var app = angular.module('login',[
-			"ui.router",
-			"ui.bootstrap",
-			"ngCookies"
-		]);
-
-	app.config(['$httpProvider', function($httpProvider){
-		$httpProvider.defaults.xsrfCookieName = 'csrftoken';
-		$httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
-	}]);
-	app.controller('LoginCtrl', function ($http, $scope, $cookies) {
-		$scope.submit = function() {
-			// login_data = {"username":"admin", "password": "dont32be"};
-			login_data = {"username" : $scope.username, "password": $scope.password}
-			$http.post("/accounts/get_auth_token/", login_data).then(function(res){
-				console.log(res.data.token);
-			});
-		};
-	});
-</script>	
+	<script src="{% static 'js/app.js' %}"></script>
+	<script src="{% static 'js/controllers.js' %}"></script>
+	<script src="{% static 'js/services.js' %}"></script>
 {% endblock %}

@@ -4,12 +4,14 @@ from rest_framework.routers import DefaultRouter
 from . views import TaskViewSet
 from django.views.generic import RedirectView
 
+from .views import *
 
 router = DefaultRouter()
 router.register(prefix="tasks", viewset = TaskViewSet)
-# urlpatterns = [
-# 	url(r'^rest-auth/', include('rest_auth.urls')),
-# 	url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
-# 	url(r'^verifyemail/(?P<key>\w+)$', RedirectView.as_view(url='/', permanent=True), name='account_confirm_email')
-# ]
-urlpatterns = router.urls
+urlpatterns	= [
+	url(r'^accounts/', include('accounts.urls', namespace="accounts")),
+	url(r'^admin/', admin.site.urls),
+	url(r'^usertasks/', usertasks, name="usertasks")
+]
+
+urlpatterns += router.urls

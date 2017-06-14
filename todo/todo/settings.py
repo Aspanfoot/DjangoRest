@@ -40,8 +40,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'crispy_forms',
-    'profile',
-    'api'
+    'api',
     ]
 
 MIDDLEWARE = [
@@ -139,12 +138,11 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static/todo/')
 ]
 
-
-REST_FRAMEWORK = { 
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-}
+# REST_FRAMEWORK = { 
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework.authentication.TokenAuthentication',
+#     ),
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.IsAuthenticated',
+#     ),
+# }

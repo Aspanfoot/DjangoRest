@@ -20,4 +20,3 @@ class UserSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
-# { "username": "test_user", "password":"password" , "email":"test_user@gmail.com" }  

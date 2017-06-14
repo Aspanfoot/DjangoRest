@@ -1,0 +1,16 @@
+<div class = "container login-form" ng-controller="MainCtrl">
+	<form action="" method = 'post' name="loginForm">
+		<div class = "form-group">
+			<label for"">Enter username</label>
+			<input class="form-control" type="text" name="username" id="username" ng-model="username"
+				required ng-minlength="2">
+		</div>
+		<div>
+			<label for="password">Enter password</label>
+			<input class="form-control" type="text" name="password" id="password" ng-model="password" 
+				   required ng-minlength="2" >
+		</div>
+		<button type="button" class="btn btn-primary" ng-click="login()"
+			    ng-disabled="loginForm.$invalid">Login</button>
+	</form>
+</div>

@@ -8,9 +8,6 @@ from . import views
 
 
 urlpatterns = [
-	url(r'^$', TemplateView.as_view(template_name = 'home.html'),name='index'), 
+	url(r'^$', TemplateView.as_view(template_name = 'base.html'),name='index'), 
 	url(r'^api/', include('api.urls', namespace="api")),
-	url(r'^profile/', include('profile.urls', namespace="profile")),
-	url(r'^accounts/', include('accounts.urls', namespace="accounts")),
-	url(r'^admin/', admin.site.urls)
 ]

@@ -24,7 +24,8 @@ class Task(models.Model):
 		(HIGH, "High"),
 	)
 
-	name = models.CharField(max_length = 60)
-	description = models.CharField(max_length = 500)
-	status = models.CharField(max_length=12, choices=TASK_CHOICES, default = NOT_STARTED)
-	priority = models.CharField(max_length = 9, choices = PRIORITY_CHOICES, default = NORMAL)
+	token = models.CharField(max_length = 40, blank=True)
+	name = models.CharField(max_length=60)
+	description = models.CharField(max_length=500)
+	status = models.CharField(max_length=12, choices=TASK_CHOICES, default=NOT_STARTED)
+	priority = models.CharField(max_length=9, choices=PRIORITY_CHOICES, default=NORMAL)
