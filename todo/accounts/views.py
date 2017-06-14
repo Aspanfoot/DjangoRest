@@ -20,21 +20,20 @@ class UserViewSet(viewsets.ModelViewSet):
 	model = User
 
 	def get_permissions(self):
-		return (AllowAny()),
-		#Додати це щоб доступ мали тільки зареєстровані юзера і стаф
-		#if self.request.method == 'POST'
-		#else IsStaffOrTargetUser()
+		return (AllowAny if self.request.method == "POST"
+                else IsStaffOrTargetUser()),
+
 
 
 @api_view(['POST'])
-@permission_classes((AllowAny, ))
+@permission_classes((AllowAny,))
 def create_auth(request):
     serialized = UserSerializer(data=request.data)
     if serialized.is_valid():
         User.objects.create_user(
             serialized.initial_data['username'],
-            serialized.initial_data['password'],
-            serialized.initial_data['email']
+            serialized.initial_data['email'],
+            serialized.initial_data['password']
         )
         return Response(serialized.data, status=status.HTTP_201_CREATED)
     else:
