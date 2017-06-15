@@ -9,22 +9,28 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import status
+from django.shortcuts import get_object_or_404
+from rest_framework.renderers import JSONRenderer
 
 class TaskViewSet(viewsets.ModelViewSet):
 	queryset = Task.objects.all()
 	serializer_class = TaskSerializer
 	authentication_classes = (TokenAuthentication,)
 
+	# def retrieve(self, request, pk=None):
+	# 	user_tasks = Tasks.objects.filter(user_id=request.user.id)
+	# 	user = get_object_or_404(user_ta)
+	# 	serializer = TaskSerializer(user)
+	# 	return Response(serializer.data)
+
+
 @api_view(['GET'])
 def gettasks(request):
-	user_tasks = Task.objects.filter(user_id=request.user.id)
-	return Response()
-	serialized = TaskSerializer(data=user_tasks)
-	if serialized.is_valid():
-		return Response(serialized.data, status=status.HTTP_200_OK)
-	else:
-		return Response("Hello")
-
+	queryset = Task.objects.filter(user_id=request.user.id)
+	serialized = TaskSerializer(instance=queryset, many=True)
+	
+	return Response(serialized.data)
+#TODO Create classses
 @api_view(['POST'])
 def createtask(request):
 	request.data["user_id"] = request.user.id

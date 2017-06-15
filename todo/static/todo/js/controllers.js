@@ -1,19 +1,21 @@
-app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks){
+app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks, $cookies){
 	$scope.tasks = []
 	$scope.update = false;
 	//Для юзера з юзернейм пароль створює токен
 	$scope.login = function() {
 		login_data = {"username" : $scope.username, "password": $scope.password}
 
-		Tasks.token(login_data).then(function(res){
-			console.log(res.data.token);
-			$state.go('todo', {"token":res.data.token})
+		Tasks.getToken(login_data).then(function(res){
+			$cookies.put("token", res.data.token);
+			$state.go('todo');
+
+			Tasks.cookieCreate();
+			$scope.updateScope();
 		});
 	};
-
 	//Видаляє токен юзера
 	$scope.logout = function() {
-		$stateParams.token = Null;
+		Tasks.cookieDelete();
 	}
 
 	//Круд тасків
@@ -34,6 +36,7 @@ app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks){
 	$scope.updateTask = function(){
 		Tasks.update($scope.task).then(function(res){
 			$scope.updateScope();
+			Tasks.cookieCreate();
 		}); 
 	};
 
@@ -47,20 +50,15 @@ app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks){
 
 	//Фільтрування даних
 	$scope.updateScope = function(){
+		Tasks.cookieCreate();
 		Tasks.all().then(function(res){
+			console.log("Scope update");
 			$scope.tasks = res.data
+
 		});
 	};
 
-	// function filter_token(res){
-	// 	var temp = []
-	// 	for(i=0; i<res.data.length-1; i++) {
-	// 		if(res.data[i].token == $stateParams.token){
-	// 			temp.push(res.data[i]);
-	// 		}
-	// 	}
-	// 	return temp
-	// }
-
-	$scope.updateScope();
+	if($cookies.get("token")){
+		$scope.updateScope();
+	}
 });
