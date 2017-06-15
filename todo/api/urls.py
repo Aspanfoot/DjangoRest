@@ -8,11 +8,10 @@ from .views import *
 
 router = DefaultRouter()
 router.register(prefix="tasks", viewset = TaskViewSet)
+
 urlpatterns	= [
-	url(r'^accounts/', include('accounts.urls', namespace="accounts")),
+	url(r'^accounts/', include('api.accounts.urls', namespace="accounts")),
 	url(r'^admin/', admin.site.urls),
-	url(r'^gettasks/', gettasks, name="gettasks"),
-	url(r'^createtask/', createtask, name="createtask")
 ]
 
 urlpatterns += router.urls

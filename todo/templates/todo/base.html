@@ -11,12 +11,12 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-	<link rel="stylesheet" href="{% static 'css/body.css'%}">
-	<link rel="stylesheet" href="{% static 'css/header.css'%}">
-	<link rel="stylesheet" href="{% static 'css/login_form.css'%}">
+	<link rel="stylesheet" href="{% static 'styles/body.css'%}">
+	<link rel="stylesheet" href="{% static 'styles/header.css'%}">
+	<link rel="stylesheet" href="{% static 'styles/login_form.css'%}">
 
-<!-- <base href="/">
- -->
+<base href="/">
+
  </head>
 <body>
 	<div ng-app="todo">
@@ -33,10 +33,9 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.js"></script>
 	<script src="{% static 'bower_components/angular-cookies/angular-cookies.js' %}"></script>
 	
-	<script src="{% static 'js/app.js' %}"></script>
-	<script src="{% static 'js/controllers.js' %}"></script>
-	<script src="{% static 'js/services.js' %}"></script>
-	<script src="{% static 'js/uiRouter.js' %}"></script>
-	
+	<script src="{% static 'scripts/app.js' %}"></script>
+	<script src="{% static 'scripts/controllers/controllers.js' %}"></script>
+	<script src="{% static 'scripts/services/services.js' %}"></script>
+	<script src="{% static 'scripts/routers/uiRouter.js' %}"></script>
 </body>
 </html>

@@ -18,32 +18,24 @@ class TaskViewSet(viewsets.ModelViewSet):
 	serializer_class = TaskSerializer
 	authentication_classes = (TokenAuthentication,)
 
-	# def retrieve(self, request, pk=None):
-	# 	user_tasks = Tasks.objects.filter(user_id=request.user.id)
-	# 	user = get_object_or_404(user_ta)
-	# 	serializer = TaskSerializer(user)
-	# 	return Response(serializer.data)
+	# def retrieve(self, request, *args, **kwargs):
+	# 	return super(UserViewSet, self).retrieve(request, *args, **kwargs)
 
+	def list(self, request):
+		queryset = Task.objects.filter(user_id=request.user.id)
+		serialized = TaskSerializer(instance=queryset, many=True)
 
-@api_view(['GET'])
-def gettasks(request):
-	queryset = Task.objects.filter(user_id=request.user.id)
-	serialized = TaskSerializer(instance=queryset, many=True)
-	
-	return Response(serialized.data)
+		return Response(serialized.data)
 
-#TODO Create classses
-
-@api_view(['POST'])
-def createtask(request):
-	request.data["user_id"] = request.user.id
-	serialized = TaskSerializer(data=request.data)
-	if serialized.is_valid():
-		Task.objects.create(
-			user_id=serialized.initial_data["user_id"],
-			name=serialized.initial_data["name"],
-			description=serialized.initial_data["description"],
-		)
-		return Response(serialized.data, status=status.HTTP_201_CREATED)
-	else:
-		return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
+	def create(self, request, *args, **kwargs):
+		request.data["user_id"] = request.user.id
+		serialized = TaskSerializer(data=request.data)
+		if serialized.is_valid():
+			Task.objects.create (
+				user_id=serialized.initial_data["user_id"],
+				name=serialized.initial_data["name"],
+				description=serialized.initial_data["description"],
+			)
+			return Response(serialized.data, status=status.HTTP_201_CREATED)
+		else:
+			return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)

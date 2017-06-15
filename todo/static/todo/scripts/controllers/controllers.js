@@ -1,9 +1,7 @@
-app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks, $cookies){
+app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks, $cookies) {
 	$scope.tasks = []
 	$scope.update = false;
 
-	$http.defaults.xsrfCookieName = 'csrftoken';
-	$http.defaults.xsrfHeaderName = 'X-CSRFToken';
 	//Для юзера з юзернейм пароль створює токен
 	$scope.login = function() {
 		var login_data = {"username" : $scope.username, "password": $scope.password}
@@ -21,7 +19,7 @@ app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks, 
 		Tasks.cookieDelete();
 	}
 
-	$scope.register = function(){
+	$scope.register = function() {
 		Tasks.register($scope.user)
 	}
 
@@ -40,15 +38,16 @@ app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks, 
 		});
 	};
 
-	$scope.updateTask = function(){
+	$scope.updateTask = function() {
+		$scope.update=false;
 		Tasks.update($scope.task).then(function(res){
 			$scope.updateScope();
 			Tasks.cookieCreate();
 		}); 
 	};
 
-	//Підвантаження форми з параметрами
-	$scope.loadForm = function(id){
+	//Підвантаження форми з параметрами на виклик кнопки едіт
+	$scope.loadForm = function(id) {
 		$scope.update = true;
 		Tasks.get(id).then(function(res){
 			$scope.task = res.data;
@@ -56,16 +55,19 @@ app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks, 
 	};
 
 	//Фільтрування даних
-	$scope.updateScope = function(){
+	$scope.updateScope = function() {
 		Tasks.cookieCreate();
 		Tasks.all().then(function(res){
 			console.log("Scope update");
 			$scope.tasks = res.data
-
 		});
 	};
 
-	if($cookies.get("token")){
+	$scope.test = function() {
+		console.log("Controller works");
+	}	
+
+	if($cookies.get("token")) {
 		$scope.updateScope();
 	}
 });

@@ -1,8 +1,8 @@
 app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider){
 
-  	// $locationProvider.html5Mode(true);
 	$httpProvider.defaults.xsrfCookieName = 'csrftoken';
 	$httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+
 
 	$stateProvider
 		.state('home', {
@@ -18,13 +18,13 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $location
 			controller: 'MainCtrl'
 		})
 		.state('todo', {
-			url: "/todo/:token",
+			url: "/todo",
 			views:{
 				header: {
 					templateUrl: '/static/templates/navigation.html'
 				},
 				body: {
-					templateUrl: '/static/templates/todo.html'
+					templateUrl: '/static/templates/todo_list.html'
 				}
 			},
 			controller: 'MainCtrl'
@@ -36,7 +36,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $location
 					templateUrl: '/static/templates/navigation.html'
 				},
 				body: {
-					templateUrl: '/static/templates/login.html'
+					templateUrl: '/static/templates/auth/login.html'
 				}
 			},
 			controller: 'MainCtrl'
@@ -48,7 +48,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $location
 					templateUrl: '/static/templates/navigation.html'
 				},
 				body: {
-					templateUrl: '/static/templates/logout.html'
+					templateUrl: '/static/templates/auth/logout.html'
 				}
 			},
 			controller: 'MainCtrl'
@@ -60,11 +60,18 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $location
 					templateUrl: '/static/templates/navigation.html'
 				},
 				body: {
-					templateUrl: '/static/templates/register.html'
+					templateUrl: '/static/templates/auth/register.html'
 				}
 			},
 			controller: 'MainCtrl'
+		})
+		.state('test', {
+			url: '/test',
+			templateUrl: '/static/templates/test.html',
+			controller: 'MainCtrl',
 		});
+
+	$locationProvider.html5Mode(true);
 
 	$urlRouterProvider.otherwise('/');
 });

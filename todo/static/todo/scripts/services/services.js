@@ -11,7 +11,6 @@ app.service('Tasks', function($http, $cookies, BASE_URL, ACCOUNTS) {
 
 	Tasks.cookieDelete = function() {
 		$cookies.remove("token");
-		console.log("Cookie was deleted");
 		console.log($cookies.get("token"));
 	}
 
@@ -24,9 +23,8 @@ app.service('Tasks', function($http, $cookies, BASE_URL, ACCOUNTS) {
 		return $http.post(ACCOUNTS + "register/" , user)
 	}
 
-
 	Tasks.all = function() {
-		return $http.get("/api/gettasks/");
+		return $http.get(BASE_URL);
 	};
 
 	Tasks.update = function(task) {
@@ -38,10 +36,11 @@ app.service('Tasks', function($http, $cookies, BASE_URL, ACCOUNTS) {
 	};
 
 	Tasks.add = function(task) {
-		return $http.post("/api/createtask/", task)
+		return $http.post(BASE_URL, task)
 	};
 
 	Tasks.get = function(task_id) {
+		console.log(task_id);
 		return $http.get(BASE_URL + task_id + '/')
 	};
 
