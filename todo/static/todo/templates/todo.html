@@ -1,93 +1,93 @@
-<div ng-controller="MainCtrl">
-<h1 class="page-header">Task list avaiable</h1>
-<table class="table" id = "task-table">
-	<thead>
-		<tr>
-			<th class = "number">№</th>
-			<th class = "name">Task Name</th>
-			<th class = "description">Description</th>
-			<th class = "status">Status</th>
-			<th class = "priority">Priority</th>
-			<th class = "control-buttons"></th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr ng-repeat = "task in tasks track by $index">
-			<td>{{$index + 1}}</td>
-			<td>{{task.name}}</td>
-			<td>{{task.description}}</td>
-			<td>{{task.status}}</td>
-			<td>{{task.priority}}</td>
-			<td></td>
-			<td>
-			<button type="button"
-					class="btn btn-warning btn-sm"
-					ng-click="loadForm(task.id)"
-					data-toggle="modal" data-target="#myModal">
-				<span class="glyphicon glyphicon-pencil"></span>
-			</button>
-			<button type="button"
-					class="btn btn-danger btn-sm"
-					ng-click="deleteTask(task.id)">
-					<span class="glyphicon glyphicon-trash"></span>
-			</button>
-			</td>
-		</tr>
-	</tbody>
-</table>
-<div>
-	<button type="button" class="btn btn-primary"
-			data-toggle="modal" data-target="#myModal">
-		<span class="glyphicon glyphicon-plus"></span>
-		Add task
-	</button>
+<div ng-controller="MainCtrl" class="table-fix">
+	<h1 class="page-header">Task list avaiable</h1>
+	<table class="table" id = "task-table">
+		<thead>
+			<tr>
+				<th class = "number">№</th>
+				<th class = "name">Task Name</th>
+				<th class = "description">Description</th>
+				<th class = "status">Status</th>
+				<th class = "priority">Priority</th>
+				<th class = "control-buttons"></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat = "task in tasks track by $index">
+				<td>{{$index + 1}}</td>
+				<td>{{task.name}}</td>
+				<td>{{task.description}}</td>
+				<td>{{task.status}}</td>
+				<td>{{task.priority}}</td>
+				<td>
+					<button type="button"
+							class="btn btn-warning btn-sm"
+							ng-click="loadForm(task.id)"
+							data-toggle="modal" data-target="#myModal">
+						<span class="glyphicon glyphicon-pencil"></span>
+					</button>
+					<button type="button"
+							class="btn btn-danger btn-sm"
+							ng-click="deleteTask(task.id)">
+							<span class="glyphicon glyphicon-trash"></span>
+					</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div>
+		<button type="button" class="btn btn-primary"
+				data-toggle="modal" data-target="#myModal">
+			<span class="glyphicon glyphicon-plus"></span>
+			Add task
+		</button>
 
-	<div class="modal fade" id="myModal" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<form  action="" name="modalForm">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">Modal Header</h4>
-					</div>
-					<div class="modal-body">
-						<div class="form-group">
-							<label for="">Name</label>
-							<input type="text" class="form-control" ng-model="task.name" 
-							required required ng-minlength='2' ng-maxlength='50'>
+		<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<form  action="" name="modalForm">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Modal Header</h4>
 						</div>
-						<div class="form-group">
-							<label for="">Description</label>
-							<textarea class="form-control" ng-model="task.description" name="" 
-							id="" cols="20" rows="3" style="resize:none;" 
-							required ng-minlength='2' ng-maxlength='500'/>
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="">Name</label>
+								<input type="text" class="form-control" ng-model="task.name" 
+								required required ng-minlength='2' ng-maxlength='50'>
+							</div>
+							<div class="form-group">
+								<label for="">Description</label>
+								<textarea class="form-control" ng-model="task.description" name="" 
+								id="" cols="20" rows="3" style="resize:none;" 
+								required ng-minlength='2' ng-maxlength='500'/>
+							</div>
+							<div class="form-group">
+								<label for="">Priority</label>
+								<select ng-init="task.priority='LOW'" name="status" id="" class="form-control" ng-model="task.priority">
+									<option>LOW</option>
+									<option>NORMAL</option>
+									<option>HIGH</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="">Status</label>
+								<select ng-init="task.status='NOT_STARTED'" name="priority" id="" class="form-control" ng-model="task.status">
+									<option value="NOT_STARTED">NOT_STARTED</option>
+									<option value="IN_PROGRES">IN_PROGRES</option>
+									<option value="COMPLETE">COMPLETE</option>
+								</select>
+							</div>
 						</div>
-						<div class="form-group">
-							<label for="">Priority</label>
-							<select ng-init="task.priority='LOW'" name="status" id="" class="form-control" ng-model="task.priority">
-								<option>LOW</option>
-								<option>NORMAL</option>
-								<option>HIGH</option>
-							</select>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary" data-dismiss="modal" ng-disabled="modalForm.$invalid" ng-click="update ? updateTask() : addTask()">Submit
+							</button>
 						</div>
-						<div class="form-group">
-							<label for="">Status</label>
-							<select ng-init="task.status='NOT_STARTED'" name="priority" id="" class="form-control" ng-model="task.status">
-								<option value="NOT_STARTED">NOT_STARTED</option>
-								<option value="IN_PROGRES">IN_PROGRES</option>
-								<option value="COMPLETE">COMPLETE</option>
-							</select>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary" data-dismiss="modal" ng-disabled="modalForm.$invalid" ng-click="update ? updateTask() : addTask()">Submit
-						</button>
-					</div>
-				</form>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
 </div>

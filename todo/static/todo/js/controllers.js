@@ -1,9 +1,12 @@
 app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks, $cookies){
 	$scope.tasks = []
 	$scope.update = false;
+
+	$http.defaults.xsrfCookieName = 'csrftoken';
+	$http.defaults.xsrfHeaderName = 'X-CSRFToken';
 	//Для юзера з юзернейм пароль створює токен
 	$scope.login = function() {
-		login_data = {"username" : $scope.username, "password": $scope.password}
+		var login_data = {"username" : $scope.username, "password": $scope.password}
 
 		Tasks.getToken(login_data).then(function(res){
 			$cookies.put("token", res.data.token);
@@ -13,9 +16,13 @@ app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks, 
 			$scope.updateScope();
 		});
 	};
-	//Видаляє токен юзера
+	//Видаляє токен юзера якщо він натиснув logout
 	$scope.logout = function() {
 		Tasks.cookieDelete();
+	}
+
+	$scope.register = function(){
+		Tasks.register($scope.user)
 	}
 
 	//Круд тасків

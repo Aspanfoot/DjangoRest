@@ -12,6 +12,7 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 from rest_framework.renderers import JSONRenderer
 
+
 class TaskViewSet(viewsets.ModelViewSet):
 	queryset = Task.objects.all()
 	serializer_class = TaskSerializer
@@ -22,15 +23,15 @@ class TaskViewSet(viewsets.ModelViewSet):
 	# 	user = get_object_or_404(user_ta)
 	# 	serializer = TaskSerializer(user)
 	# 	return Response(serializer.data)
-
-
 @api_view(['GET'])
 def gettasks(request):
 	queryset = Task.objects.filter(user_id=request.user.id)
 	serialized = TaskSerializer(instance=queryset, many=True)
 	
 	return Response(serialized.data)
+
 #TODO Create classses
+
 @api_view(['POST'])
 def createtask(request):
 	request.data["user_id"] = request.user.id

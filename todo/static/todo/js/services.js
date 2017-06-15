@@ -1,7 +1,7 @@
 app.constant('BASE_URL', 'http://localhost:8000/api/tasks/');
-app.constant('TOKEN_URL', 'http://127.0.0.1:8000/api/accounts/get_auth_token/');
+app.constant('ACCOUNTS', 'http://127.0.0.1:8000/api/accounts/');
 
-app.service('Tasks', function($http ,BASE_URL, TOKEN_URL, $cookies){
+app.service('Tasks', function($http, $cookies, BASE_URL, ACCOUNTS) {
 	var Tasks = {};
 
 	Tasks.cookieCreate = function() {
@@ -16,8 +16,14 @@ app.service('Tasks', function($http ,BASE_URL, TOKEN_URL, $cookies){
 	}
 
 	Tasks.getToken = function(login_data) {
-		return $http.post(TOKEN_URL, login_data)
+		return $http.post(ACCOUNTS + "get_auth_token/", login_data)
 	};
+
+	Tasks.register = function(user){
+		console.log(user);
+		return $http.post(ACCOUNTS + "register/" , user)
+	}
+
 
 	Tasks.all = function() {
 		return $http.get("/api/gettasks/");
@@ -38,10 +44,6 @@ app.service('Tasks', function($http ,BASE_URL, TOKEN_URL, $cookies){
 	Tasks.get = function(task_id) {
 		return $http.get(BASE_URL + task_id + '/')
 	};
-
-	Tasks.userTasks = function(){
-		return $http.get(BASE_URL + task_id + '/')
-	}
 
 	return Tasks;
 });

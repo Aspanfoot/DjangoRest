@@ -1,9 +1,9 @@
 <div class = "container form-center login-form" ng-controller="MainCtrl">
-	<form action="" method = 'POST' name="registerForm">
+	<form action="" name="registerForm">
 
 		<div class="form-group" ng-model="user.username">
 			<label for="">Username</label>
-			<input class="form-control" type="text" required>
+			<input class="form-control" type="text" ng-model="user.username" required>
 		</div>
 		<div class="form-group">
 			<label for="">Email</label>
@@ -14,7 +14,7 @@
 			<input class="form-control" type="text" ng-model="user.password" required>
 		</div>
 		
-		<button type="submit" ng-click="register()" class = "btn btn-primary" ng-disabled="registerForm.$invalid">Register</button>
+		<button type="submit" ng-click="register()" ui-sref="login" class = "btn btn-primary" ng-disabled="registerForm.$invalid">Register</button>
 		<br>
 	</form>
 </div>

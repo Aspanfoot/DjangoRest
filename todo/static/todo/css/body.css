@@ -12,3 +12,27 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+
+#task-table .number {
+	width: 10%;
+}
+
+#task-table .name {
+	width: 20%;
+}
+
+#task-table .description {
+	width: 30%;
+}
+
+#task-table .status {
+	width: 15%;
+}
+
+#task-table .priority {
+	width: 15%;
+}
+
+#task-table .control-buttons {
+	width: 10%;
+}

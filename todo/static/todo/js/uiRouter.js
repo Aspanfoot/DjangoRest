@@ -1,7 +1,6 @@
 app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider){
 
   	// $locationProvider.html5Mode(true);
-
 	$httpProvider.defaults.xsrfCookieName = 'csrftoken';
 	$httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 
