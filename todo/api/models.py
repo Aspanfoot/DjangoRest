@@ -24,7 +24,7 @@ class Task(models.Model):
 		(HIGH, "High"),
 	)
 
-	token = models.CharField(max_length = 40, blank=True)
+	user_id = models.PositiveIntegerField()
 	name = models.CharField(max_length=60)
 	description = models.CharField(max_length=500)
 	status = models.CharField(max_length=12, choices=TASK_CHOICES, default=NOT_STARTED)

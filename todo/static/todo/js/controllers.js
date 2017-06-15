@@ -4,13 +4,13 @@ app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks){
 	//Для юзера з юзернейм пароль створює токен
 	$scope.login = function() {
 		login_data = {"username" : $scope.username, "password": $scope.password}
-		$http.post("/api/accounts/get_auth_token/", login_data).then(function(res){
-			if(res.data.token){
-				$state.go('todo', {"token": res.data.token});
-			}
+
+		Tasks.token(login_data).then(function(res){
+			console.log(res.data.token);
+			$state.go('todo', {"token":res.data.token})
 		});
 	};
-	
+
 	//Видаляє токен юзера
 	$scope.logout = function() {
 		$stateParams.token = Null;
@@ -18,9 +18,9 @@ app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks){
 
 	//Круд тасків
 	$scope.addTask = function() {
-		$scope.task.token = $stateParams.token
 		Tasks.add($scope.task)
 			.then(function(res){
+			console.log(res.data);
 			$scope.updateScope();
 		});
 	};
@@ -39,8 +39,6 @@ app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks){
 
 	//Підвантаження форми з параметрами
 	$scope.loadForm = function(id){
-
-		console.log("im inside controller");
 		$scope.update = true;
 		Tasks.get(id).then(function(res){
 			$scope.task = res.data;
@@ -50,19 +48,19 @@ app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks){
 	//Фільтрування даних
 	$scope.updateScope = function(){
 		Tasks.all().then(function(res){
-			$scope.tasks = filter_token(res)
+			$scope.tasks = res.data
 		});
 	};
 
-	function filter_token(res){
-		var temp = []
-		for(i=0; i<res.data.length-1; i++) {
-			if(res.data[i].token == $stateParams.token){
-				temp.push(res.data[i]);
-			}
-		}
-		return temp
-	}
+	// function filter_token(res){
+	// 	var temp = []
+	// 	for(i=0; i<res.data.length-1; i++) {
+	// 		if(res.data[i].token == $stateParams.token){
+	// 			temp.push(res.data[i]);
+	// 		}
+	// 	}
+	// 	return temp
+	// }
 
 	$scope.updateScope();
 });

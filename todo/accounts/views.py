@@ -18,26 +18,22 @@ class UserViewSet(viewsets.ModelViewSet):
 	queryset = User.objects.all()
 	serializer_class = UserSerializer
 	model = User
-	# def get_permissions(self):
-	# 	return (),
 
 @api_view(['POST'])
 @permission_classes((AllowAny,))
 def register(request):
-    serialized = UserSerializer(data=request.data)
+	serialized = UserSerializer(data=request.data)
 
-    if  User.objects.filter(username=serialized.initial_data['username']).exists():
-            return Response("Username already exist", status=status.HTTP_400_BAD_REQUEST)
+	if  User.objects.filter(username=serialized.initial_data['username']).exists():
+			return Response("Username already exist", status=status.HTTP_400_BAD_REQUEST)
 
-    if serialized.is_valid():
-        User.objects.create_user(
-            serialized.initial_data['username'],
-            serialized.initial_data['email'],
-            serialized.initial_data['password']
-        )
+	if serialized.is_valid():
+		User.objects.create_user(
+			serialized.initial_data['username'],
+			serialized.initial_data['email'],
+			serialized.initial_data['password']
+		)
 
-        return Response(serialized.data, status=status.HTTP_201_CREATED)
-    else:
-        return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
-
-    
+		return Response(serialized.data, status=status.HTTP_201_CREATED)
+	else:
+		return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
