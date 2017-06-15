@@ -3,16 +3,17 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $location
 	$httpProvider.defaults.xsrfCookieName = 'csrftoken';
 	$httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 
-
 	$stateProvider
 		.state('home', {
 			url: '/',
 			views:{
 				header: {
-					templateUrl: '/static/templates/navigation.html'
+					templateUrl: '/static/templates/navigation.html',
+					controller: 'MainCtrl'
 				},
 				body: {
-					templateUrl: '/static/templates/home.html'
+					templateUrl: '/static/templates/home.html',
+					controller: 'MainCtrl'
 				}
 			},	
 			controller: 'MainCtrl'
@@ -21,10 +22,12 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $location
 			url: "/todo",
 			views:{
 				header: {
-					templateUrl: '/static/templates/navigation.html'
+					templateUrl: '/static/templates/navigation.html',
+					controller: 'MainCtrl'
 				},
 				body: {
-					templateUrl: '/static/templates/todo_list.html'
+					templateUrl: '/static/templates/todo_list.html',
+					controller: 'MainCtrl'
 				}
 			},
 			controller: 'MainCtrl'
@@ -33,10 +36,13 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $location
 			url:"/login",
 			views:{
 				header: {
-					templateUrl: '/static/templates/navigation.html'
+					templateUrl: '/static/templates/navigation.html',
+					controller: 'MainCtrl'
 				},
 				body: {
-					templateUrl: '/static/templates/auth/login.html'
+					templateUrl: '/static/templates/auth/login.html',
+					controller: 'MainCtrl'
+
 				}
 			},
 			controller: 'MainCtrl'
@@ -45,10 +51,12 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $location
 			url:"/logout",
 			views:{
 				header: {
-					templateUrl: '/static/templates/navigation.html'
+					templateUrl: '/static/templates/navigation.html',
+					controller: 'MainCtrl'
 				},
 				body: {
-					templateUrl: '/static/templates/auth/logout.html'
+					templateUrl: '/static/templates/auth/logout.html',
+					controller: 'MainCtrl'
 				}
 			},
 			controller: 'MainCtrl'
@@ -57,21 +65,17 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $location
 			url:'/register',
 			views:{
 				header: {
-					templateUrl: '/static/templates/navigation.html'
+					templateUrl: '/static/templates/navigation.html',
+					controller: 'MainCtrl'
 				},
 				body: {
-					templateUrl: '/static/templates/auth/register.html'
+					templateUrl: '/static/templates/auth/register.html',
+					controller: 'MainCtrl'
 				}
 			},
 			controller: 'MainCtrl'
-		})
-		.state('test', {
-			url: '/test',
-			templateUrl: '/static/templates/test.html',
-			controller: 'MainCtrl',
 		});
 
 	$locationProvider.html5Mode(true);
-
 	$urlRouterProvider.otherwise('/');
 });
