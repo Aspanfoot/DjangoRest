@@ -23,6 +23,8 @@ class TaskViewSet(viewsets.ModelViewSet):
 	# 	user = get_object_or_404(user_ta)
 	# 	serializer = TaskSerializer(user)
 	# 	return Response(serializer.data)
+
+
 @api_view(['GET'])
 def gettasks(request):
 	queryset = Task.objects.filter(user_id=request.user.id)
