@@ -12,6 +12,8 @@ router.register(prefix="users", viewset = UserViewSet)
 urlpatterns = [ 
 	url(r'^login/', TemplateView.as_view(template_name="accounts/login.html"), name="login"),
 	url(r'^logout/', TemplateView.as_view(template_name="accounts/logout.html"), name="logout"),
-	url(r'^get_auth_token/', rest_framework_views.obtain_auth_token, name='get_auth_token')
+	# url(r'^get_auth_token/', rest_framework_views.obtain_auth_token, name='get_auth_token')
+	url(r'^get_auth_token/', ObtainAuthToken.as_view(), name='get_auth_token')
 ]
+
 urlpatterns += router.urls

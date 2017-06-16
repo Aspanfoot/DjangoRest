@@ -1,35 +1,39 @@
+//Add interceptors
+
+
+
 app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks, $cookies) {
 	$scope.tasks = []
 	$scope.update = false;
 	$scope.hide = false;
 
-	//Для юзера з юзернейм пароль створює токен
 	$scope.login = function() {
-		var login_data = {"username" : $scope.username, "password": $scope.password}
 
-		//state.go принципово важливий оскільки я хочу апдейтнути скоуп після того як юзер залогається
-		//Якщо логується і має токен тоді показати відповідні елементи меню
-		Tasks.getToken(login_data).then(function(res){
-			if(res.data.token) {
+		var loginData = {"username" : $scope.username, "password": $scope.password}
+		
+		Tasks.createCookie(loginData).then(
+			function onSucess(res){
+				console.log(res);
 				$cookies.put("token", res.data.token);
 				$state.go("todo");
-				$scope.updateScope();
+			},
+			function onError (res) {
+				console.log();
 			}
-		});
+		);
 	};
 	//Видаляє токен юзера якщо він натиснув logout
-	$scope.logout = function() {
+	$scope.logout = function () {
 		Tasks.cookieDelete();
 	}
 
-	$scope.register = function() {
+	$scope.register = function () {
 		Tasks.register($scope.user).then(function onSuccess(){
 			$state.go("login");
 		});
 	}
-	
 	//Круд тасків
-	$scope.addTask = function() {
+	$scope.addTask = function () {
 		Tasks.add($scope.task)
 			.then(function(res){
 			console.log(res.data);
@@ -37,13 +41,13 @@ app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks, 
 		});
 	};
 
-	$scope.deleteTask = function(id) {
+	$scope.deleteTask = function (id) {
 		Tasks.delete(id).then(function(res) {
 			$scope.updateScope();
 		});
 	};
 
-	$scope.updateTask = function() {
+	$scope.updateTask = function () {
 		$scope.update=false;
 		Tasks.update($scope.task).then(function(res){
 			$scope.updateScope();
@@ -51,7 +55,7 @@ app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks, 
 	};
 
 	//Підвантаження форми з параметрами на виклик кнопки едіт
-	$scope.loadForm = function(id) {
+	$scope.loadForm = function (id) {
 		$scope.update = true;
 		Tasks.get(id).then(function(res){
 			$scope.task = res.data;
@@ -59,19 +63,32 @@ app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks, 
 	};
 
 	//Апдейтим скоуп якщо відбулися якісь зміни
-	$scope.updateScope = function() {
-		Tasks.cookieCreate();
+	$scope.updateScope = function () {
+		// Tasks.cookieCreate();
 		Tasks.all().then(function(res){
 			$scope.tasks = res.data
 		});
 	};
 
-	$scope.test = function() {
-		console.log("Controller works");
+	//Home view button fork
+	$scope.home = function () {
+		console.log("login");
+		if ($cookies.get("token")) {
+			$state.go("todo");
+		} else {
+			$state.go("login");
+		}
 	}
+
+	$scope.test = function () {
+		Tasks.test().then(function(res){
+			console.log(res.data.token);
+		});
+	};
 
 	if($cookies.get("token")) {
 		$scope.hide = true;
 		$scope.updateScope();
 	}
+
 });

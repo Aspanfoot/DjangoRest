@@ -1,3 +1,4 @@
+//Http interceptors
 app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider){
 
 	$httpProvider.defaults.xsrfCookieName = 'csrftoken';
@@ -16,7 +17,6 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $location
 					controller: 'MainCtrl'
 				}
 			},	
-			controller: 'MainCtrl'
 		})
 		.state('todo', {
 			url: "/todo",
@@ -30,7 +30,6 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $location
 					controller: 'MainCtrl'
 				}
 			},
-			controller: 'MainCtrl'
 		})
 		.state('login',{
 			url:"/login",
@@ -45,7 +44,6 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $location
 
 				}
 			},
-			controller: 'MainCtrl'
 		})
 		.state('logout',{
 			url:"/logout",
@@ -59,7 +57,6 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $location
 					controller: 'MainCtrl'
 				}
 			},
-			controller: 'MainCtrl'
 		})
 		.state('register', {
 			url:'/register',
@@ -73,7 +70,6 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $location
 					controller: 'MainCtrl'
 				}
 			},
-			controller: 'MainCtrl'
 		});
 
 	$locationProvider.html5Mode(true);

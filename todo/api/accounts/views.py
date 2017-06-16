@@ -2,16 +2,17 @@ from django.contrib.auth.models import User
 from rest_framework.permissions import AllowAny
 from rest_framework import viewsets
 from rest_framework.views import APIView
-from . import authentication, serializers
-from .serializers import UserSerializer
-# from .permissions import IsStaffOrTargetUser  
+from . import serializers
+from .serializers import UserSerializer, AuthCustomTokenSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken import views as rest_framework_views
-
 from rest_framework import status
+from rest_framework import parsers
+from rest_framework import renderers
+from django.views.decorators.csrf import csrf_exempt
 
 class UserViewSet(viewsets.ModelViewSet):
 	queryset = User.objects.all()
@@ -21,7 +22,6 @@ class UserViewSet(viewsets.ModelViewSet):
 
 	def create(self, request, *args, **kwargs):
 		serialized = UserSerializer(data=request.data)
-
 		#Перевірка чи такий пароль існує
 		#Перевірка залежить від параметрів тому доцільно перевірити 
 		#чи можна зробити функцію
@@ -40,4 +40,27 @@ class UserViewSet(viewsets.ModelViewSet):
 
 	def check(self, *args, **kwargs):
 		pass
-		
+
+#Кастомна вюшка для генерації токенів
+class ObtainAuthToken(APIView):
+	throttle_classes = ()
+	permission_classes = (AllowAny,)
+	parser_classes = (
+		parsers.FormParser,
+		parsers.MultiPartParser,
+		parsers.JSONParser,
+	)
+	renderer_classes = (renderers.JSONRenderer,)
+
+	def post(self, request):
+		serializer = UserSerializer(data=request.data)
+		serializer.is_valid(raise_exception=True)
+		user = serializer.validated_data['user']
+		user = authenticate(username=email_or_username, password=password)
+		token, created = Token.objects.get_or_create(user=user)
+
+		content = {
+			'token': str(token.key),
+		}
+
+		return Response(content)
