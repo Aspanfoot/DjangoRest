@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'api',
     'api.accounts',
+    'django_celery_results'
     ]
 
 MIDDLEWARE = [
@@ -147,3 +148,20 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
 }
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'onemillionukraine@gmail.com'
+EMAIL_HOST_PASSWORD = 'google706349'
+
+DEFAULT_FROM_EMAIL = 'onemillionukraine@gmail.com'
+SERVER_EMAIL =  'onemillionukraine@gmail.com'
+
+CELERY_RESULT_BACKEND = 'django-db'
+
+BROKER_URL = 'amqp://guest:guest@localhost:5672//'
+
+CELERY_RESULT_BACKEND = 'amqp://guest:guest@localhost:5672//'
+
+CELERY_TASK_SERIALIZER = 'json'

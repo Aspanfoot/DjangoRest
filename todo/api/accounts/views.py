@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from . import serializers
@@ -41,7 +41,7 @@ class UserViewSet(viewsets.ModelViewSet):
 	def check(self, *args, **kwargs):
 		pass
 
-#Кастомна вюшка для генерації токенів
+
 class ObtainAuthToken(APIView):
 	throttle_classes = ()
 	permission_classes = (AllowAny,)
@@ -55,8 +55,11 @@ class ObtainAuthToken(APIView):
 	def post(self, request):
 		serializer = UserSerializer(data=request.data)
 		serializer.is_valid(raise_exception=True)
-		user = serializer.validated_data['user']
-		user = authenticate(username=email_or_username, password=password)
+
+		username = serializer.validated_data['username']
+		password = serializer.validated_data['password']
+
+		user = authenticate(username=username, password=password)
 		token, created = Token.objects.get_or_create(user=user)
 
 		content = {
@@ -64,3 +67,9 @@ class ObtainAuthToken(APIView):
 		}
 
 		return Response(content)
+
+	def get(self, request):
+
+		Token.objects.get(key=request.auth.key).delete()
+
+		return Response("Token deleted");
