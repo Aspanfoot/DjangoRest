@@ -17,17 +17,17 @@ app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks, 
 			}
 		});
 	};
-
-
 	//Видаляє токен юзера якщо він натиснув logout
 	$scope.logout = function() {
 		Tasks.cookieDelete();
 	}
 
 	$scope.register = function() {
-		Tasks.register($scope.user)
+		Tasks.register($scope.user).then(function onSuccess(){
+			$state.go("login");
+		});
 	}
-
+	
 	//Круд тасків
 	$scope.addTask = function() {
 		Tasks.add($scope.task)

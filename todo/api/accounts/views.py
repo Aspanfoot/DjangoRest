@@ -17,6 +17,7 @@ class UserViewSet(viewsets.ModelViewSet):
 	queryset = User.objects.all()
 	serializer_class = UserSerializer
 	model = User
+	permission_classes = (AllowAny,)
 
 	def create(self, request, *args, **kwargs):
 		serialized = UserSerializer(data=request.data)
