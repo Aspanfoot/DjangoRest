@@ -20,7 +20,7 @@ app.service('Tasks', function($http, $cookies, BASE_URL, ACCOUNTS) {
 
 	Tasks.register = function(user){
 		console.log(user);
-		return $http.post(ACCOUNTS + "register/" , user)
+		return $http.post(ACCOUNTS + "users/" , user)
 	}
 
 	Tasks.all = function() {

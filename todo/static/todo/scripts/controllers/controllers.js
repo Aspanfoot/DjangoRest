@@ -1,19 +1,24 @@
 app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks, $cookies) {
 	$scope.tasks = []
 	$scope.update = false;
+	$scope.hide = false;
 
 	//Для юзера з юзернейм пароль створює токен
 	$scope.login = function() {
 		var login_data = {"username" : $scope.username, "password": $scope.password}
 
+		//state.go принципово важливий оскільки я хочу апдейтнути скоуп після того як юзер залогається
+		//Якщо логується і має токен тоді показати відповідні елементи меню
 		Tasks.getToken(login_data).then(function(res){
-			$cookies.put("token", res.data.token);
-			$state.go('todo');
-
-			Tasks.cookieCreate();
-			$scope.updateScope();
+			if(res.data.token) {
+				$cookies.put("token", res.data.token);
+				$state.go("todo");
+				$scope.updateScope();
+			}
 		});
 	};
+
+
 	//Видаляє токен юзера якщо він натиснув logout
 	$scope.logout = function() {
 		Tasks.cookieDelete();
@@ -42,7 +47,6 @@ app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks, 
 		$scope.update=false;
 		Tasks.update($scope.task).then(function(res){
 			$scope.updateScope();
-			Tasks.cookieCreate();
 		}); 
 	};
 
@@ -54,20 +58,20 @@ app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks, 
 		});
 	};
 
-	//Фільтрування даних
+	//Апдейтим скоуп якщо відбулися якісь зміни
 	$scope.updateScope = function() {
 		Tasks.cookieCreate();
 		Tasks.all().then(function(res){
-			console.log("Scope update");
 			$scope.tasks = res.data
 		});
 	};
 
 	$scope.test = function() {
 		console.log("Controller works");
-	}	
+	}
 
 	if($cookies.get("token")) {
+		$scope.hide = true;
 		$scope.updateScope();
 	}
 });
