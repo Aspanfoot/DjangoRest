@@ -28,6 +28,9 @@ class UserViewSet(viewsets.ModelViewSet):
 		if  User.objects.filter(username=serialized.initial_data['username']).exists():
 			return Response("Username already exist", status=status.HTTP_400_BAD_REQUEST)
 
+		if  User.objects.filter(username=serialized.initial_data['email']).exists():
+			return Response("Email already exist", status=status.HTTP_400_BAD_REQUEST)
+
 		if serialized.is_valid():
 			User.objects.create_user(
 				serialized.initial_data['username'],
@@ -37,9 +40,6 @@ class UserViewSet(viewsets.ModelViewSet):
 			return Response(serialized.data, status=status.HTTP_201_CREATED)
 		else:
 			return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
-
-	def check(self, *args, **kwargs):
-		pass
 
 
 class ObtainAuthToken(APIView):
@@ -53,11 +53,11 @@ class ObtainAuthToken(APIView):
 	renderer_classes = (renderers.JSONRenderer,)
 
 	def post(self, request):
+		#This works just fine
 		serializer = UserSerializer(data=request.data)
-		serializer.is_valid(raise_exception=True)
 
-		username = serializer.validated_data['username']
-		password = serializer.validated_data['password']
+		username = serializer.initial_data['username']
+		password = serializer.initial_data['password']
 
 		user = authenticate(username=username, password=password)
 		token, created = Token.objects.get_or_create(user=user)
@@ -69,7 +69,6 @@ class ObtainAuthToken(APIView):
 		return Response(content)
 
 	def get(self, request):
-
 		Token.objects.get(key=request.auth.key).delete()
 
 		return Response("Token deleted");

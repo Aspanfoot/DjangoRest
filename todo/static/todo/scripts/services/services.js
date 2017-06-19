@@ -22,8 +22,11 @@ app.service('Tasks', function($http, $cookies, BASE_URL, ACCOUNTS) {
 	var Tasks = {};
 
 	Tasks.cookieDelete = function () {
+		header = {
+				headers: { "Authorization": "Token " + $cookies.get("token")}
+			};
 		$cookies.remove("token");
-		console.log($cookies.get("token"));
+		return $http.get(ACCOUNTS + "get_auth_token/", header);
 	}
 
 	Tasks.createCookie = function (login_data) {

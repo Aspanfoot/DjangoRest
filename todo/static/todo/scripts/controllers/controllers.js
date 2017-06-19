@@ -1,8 +1,6 @@
-//Add interceptors
 
+app.controller('MainCtrl', function($http, $scope, $state, Tasks, $cookies) {
 
-
-app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks, $cookies) {
 	$scope.tasks = []
 	$scope.update = false;
 	$scope.hide = false;
@@ -18,13 +16,21 @@ app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks, 
 				$state.go("todo");
 			},
 			function onError (res) {
-				console.log();
+				console.log("Error on login");
 			}
 		);
 	};
+
 	//Видаляє токен юзера якщо він натиснув logout
 	$scope.logout = function () {
-		Tasks.cookieDelete();
+		Tasks.cookieDelete().then(
+		function onSuccess (res) {
+			console.log("Getting token " + $cookies.get("token"));
+			$state.go("home");
+		},
+		function onError (res) {
+			console.log("Oops error happened");
+		});
 	}
 
 	$scope.register = function () {
@@ -32,6 +38,7 @@ app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks, 
 			$state.go("login");
 		});
 	}
+
 	//Круд тасків
 	$scope.addTask = function () {
 		Tasks.add($scope.task)
@@ -64,15 +71,17 @@ app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks, 
 
 	//Апдейтим скоуп якщо відбулися якісь зміни
 	$scope.updateScope = function () {
-		// Tasks.cookieCreate();
-		Tasks.all().then(function(res){
+		Tasks.all().then(
+		function onSuccess (res) {
 			$scope.tasks = res.data
+		},
+		function onError(res){
+			console.log("Token were deleted");
 		});
 	};
 
 	//Home view button fork
 	$scope.home = function () {
-		console.log("login");
 		if ($cookies.get("token")) {
 			$state.go("todo");
 		} else {
@@ -80,15 +89,8 @@ app.controller('MainCtrl', function($http, $scope, $state, $stateParams, Tasks, 
 		}
 	}
 
-	$scope.test = function () {
-		Tasks.test().then(function(res){
-			console.log(res.data.token);
-		});
-	};
-
 	if($cookies.get("token")) {
 		$scope.hide = true;
 		$scope.updateScope();
 	}
-
 });

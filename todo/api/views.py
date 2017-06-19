@@ -14,6 +14,8 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework import parsers
 from rest_framework import renderers
 
+from django.core.mail import EmailMessage
+
 
 class TaskViewSet(viewsets.ModelViewSet):
 	queryset = Task.objects.all()
@@ -23,12 +25,14 @@ class TaskViewSet(viewsets.ModelViewSet):
 	# def retrieve(self, request, *args, **kwargs):
 	# 	return super(UserViewSet, self).retrieve(request, *args, **kwargs)
 
+	#GET 
 	def list(self, request):
 		queryset = Task.objects.filter(user_id=request.user.id)
 		serialized = TaskSerializer(instance=queryset, many=True)
 
 		return Response(serialized.data)
 
+	#POST 
 	def create(self, request, *args, **kwargs):
 		request.data["user_id"] = request.user.id
 		serialized = TaskSerializer(data=request.data)
@@ -38,9 +42,10 @@ class TaskViewSet(viewsets.ModelViewSet):
 				name=serialized.initial_data["name"],
 				description=serialized.initial_data["description"],
 			)
+
+			msg = EmailMessage('Title', 'Some html and stuff', to=["zovutexu@p33.org"])
+			msg.send()
+
 			return Response(serialized.data, status=status.HTTP_201_CREATED)
 		else:
 			return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-
