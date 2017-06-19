@@ -54,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'api.accounts.middleware.TestMiddleware'
 ]
 
 SITE_ID = 1
@@ -158,18 +159,12 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'onemillionukraine@gmail.com'
 EMAIL_HOST_PASSWORD = 'google706349'
 
-# EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
+#Celery configs
 
 # CELERY_RESULT_BACKEND = 'django-db'
 
-# BROKER_URL = 'amqp://guest:guest@localhost:5672//'
+BROKER_URL = 'amqp://guest:guest@localhost:5672//'
 
 # CELERY_RESULT_BACKEND = 'amqp://guest:guest@localhost:5672//'
 
 # CELERY_TASK_SERIALIZER = 'json'
-
-# CELERY_EMAIL_TASK_CONFIG = {
-#     'name': 'djcelery_email_send',
-#     'ignore_result': True,
-# }
-

@@ -22,9 +22,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 	def create(self, request, *args, **kwargs):
 		serialized = UserSerializer(data=request.data)
-		#Перевірка чи такий пароль існує
-		#Перевірка залежить від параметрів тому доцільно перевірити 
-		#чи можна зробити функцію
+
 		if  User.objects.filter(username=serialized.initial_data['username']).exists():
 			return Response("Username already exist", status=status.HTTP_400_BAD_REQUEST)
 

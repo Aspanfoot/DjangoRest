@@ -18,6 +18,20 @@ app.config(function ($httpProvider) {
 	$httpProvider.interceptors.push('authorizationInterceptor');
 });
 
+app.run(function ($rootScope, $state, $location, $cookies) {
+	$rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState) {
+		var shouldLogin = toState.data !== undefined
+			 			&& toState.data.requireLogin
+			 			&& !$cookies.get("token");
+
+		if (shouldLogin) {
+			$state.go("login");
+			event.preventDefault();
+			return;	
+		}
+	});
+});
+
 app.service('Tasks', function($http, $cookies, BASE_URL, ACCOUNTS) {
 	var Tasks = {};
 
@@ -42,6 +56,7 @@ app.service('Tasks', function($http, $cookies, BASE_URL, ACCOUNTS) {
 		return $http.get(BASE_URL);
 	};
 
+	// Task have been edited
 	Tasks.update = function (task) {
 		return $http.put(BASE_URL + task.id + '/', task);
 	};

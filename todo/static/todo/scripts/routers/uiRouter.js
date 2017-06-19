@@ -27,9 +27,10 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $location
 				},
 				body: {
 					templateUrl: '/static/templates/todo_list.html',
-					controller: 'MainCtrl'
+					controller: 'MainCtrl',
 				}
 			},
+			data: {requireLogin: true}
 		})
 		.state('login',{
 			url:"/login",
@@ -72,6 +73,6 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $location
 			},
 		});
 
-	$locationProvider.html5Mode(true);
+	// $locationProvider.html5Mode(true);
 	$urlRouterProvider.otherwise('/');
 });
