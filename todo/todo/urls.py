@@ -10,6 +10,6 @@ from . import views
 urlpatterns = [
 	url(r'^$', TemplateView.as_view(template_name = 'base.html'),name='index'), 
 	url(r'^api/', include('api.urls', namespace="api")),
+	url(r'^test/', views.test),
 	url(r'', TemplateView.as_view(template_name = 'base.html'),name='index'), 
-
 ]
